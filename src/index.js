@@ -3,7 +3,21 @@ import dotenv from "dotenv";
 import connectDB from "./db/index.js";
 
 dotenv.config();
-connectDB();
+
+
+
+
+
+//when async method is completed it returns a promise
+connectDB()
+.then(()=>{
+  app.listen(process.env.PORT||8000,()=>{
+    console.log(`Server is running on port ${process.env.PORT}`)
+  })
+})
+.catch((error)=>{
+  console.log("Error in DB connection",error)
+})
 
 
 
