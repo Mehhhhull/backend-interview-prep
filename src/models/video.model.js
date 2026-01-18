@@ -1,47 +1,44 @@
-import mongoose,{Schema} from "mongoose";
+import mongoose , {Schema} from "mongoose"
 
-const userSchema=new Schema({
-  username:{
-    type: String,
-    required:true,
-    unique:true,
-    lowercase:true,
-    trim:true,
-    index:true// to enable searching
-  },
-  email:{
-    type: String,
-    required:true,
-    unique:true,
-    lowercase:true,
-    trim:true,
-  },
-  fullname:{
-    type: String,
-    required:true,
-    trim:true,
-    index:true,
-  },
-  avatar:{
-    type:String, // cloudinary url
-    required:true,
-  },
-  coverImage:{
-    type:String, // cloudinary url
-  },
-  watchHistory:[
-    {
-      type:Schema.Types.ObjectId,
-      ref:"Video"
+const videoSchema=new Schema(
+  {
+    videoFile:{
+      type:String,//cloudinary url
+      required:True
+    },
+    thumbnail:{
+      type:String,//cloudinary url
+      required:True
+    },
+    title:{
+      type:String,
+      required:True
+    },
+    description:{
+      type:String,
+      required:True
+    },
+    duration:{
+      type:Number,//from cloudinary
+      required:True
+    },
+    views:{
+      type:Number,
+      default:0
+    },
+    isPublished:{
+      type:Boolean,
+      default:false
+    },
+    owner:{
+      type:Schema.types.ObjectId,
+      ref:"User",
     }
-  ],
-  password:{
-    type:String,
-    required:[true,"Password Is Required Bruh"]
   },
-  refreshToken:{
-    type:String
-  }
-},{timestamps:true})
 
-export const User=mongoose.user("User",userSchema)
+  {
+    timestamps:true
+  }
+)
+
+export const Video=mongoose.model("Video",videoSchema)
