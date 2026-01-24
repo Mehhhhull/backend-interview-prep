@@ -38,6 +38,15 @@ if (exsistedUser) {
     throw new ApiError(409,"User with given username or email already exsists")
   }
 
+  const avatarLocalPath=req.files?.avatar[0]?.path;//gpt
+  const coverImageLocalPath=req.files?.coverImage[0]?.path;//gpt
+  
+  if (!avatarLocalPath) {
+    throw new ApiError(400,"Avatar Image Is Re")
+  }
+  
+
+
 } )
 
 export {registerUser}
