@@ -11,6 +11,11 @@ const registerUser=asyncHandler( async(req,res)=>{
   //check for user creation
   //return response to frontend
 
+
+  //it is used to get data from form and json
+  const {fullName,username,email,password}=req.body;
+
+
 } )
 
 export {registerUser}
