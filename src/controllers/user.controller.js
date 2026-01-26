@@ -98,6 +98,19 @@ const loginUser=asyncHandler(async(req,res)=>{
    //password check
    //access and refresh token
    //send secure cookies
+
+   const {email,username,password}=req.body;
+
+   if(!username || !email){
+    throw new ApiError(400,"Username or Password is required")
+   }
+
+   const user=await User.findOne({
+    $or:[{username},{email}]
+   })
+   if (!user) {
+    throw new ApiError(404,"User not found")
+   }
 })
 
 export {registerUser,loginUser}
