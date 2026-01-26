@@ -89,4 +89,13 @@ if (exsistedUser) {
 
 } )
 
-export {registerUser}
+const loginUser=asyncHandler(async(req,res)=>{
+   //req body=>take data 
+   //username or email
+   //find the user
+   //password check
+   //access and refresh token
+   //send secure cookies
+})
+
+export {registerUser,loginUser}
