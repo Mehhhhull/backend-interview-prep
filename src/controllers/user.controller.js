@@ -133,7 +133,30 @@ const loginUser=asyncHandler(async(req,res)=>{
    if (!isPasswordValid) {
     throw new ApiError(404,"Invalid user credentials")
    }
+  
+   const {accessToken,refreshToken}=await generateAccessAndRefreshToken(user._id)
 
+   const loggedInUser=await User.findById(user._id).select("-password -refreshToken")
+
+   //cookkies
+   const options={
+    httpOnly:true,
+    secure:true
+   } //makes the cookies only modifiable through the server and cant be modified from the frontend
+
+   return res
+   .status(200)
+   .cookie("accessToken",accessToken,options)
+   .cookie("refreshToken",refreshToken,options)
+   .json(
+    new ApiResponse(
+      200,
+      {
+        user:loggedInUser,accessToken,refreshToken
+      },
+      "User logged in successfully"
+    )
+   )
 
 })
 
