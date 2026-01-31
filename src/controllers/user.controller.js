@@ -349,6 +349,42 @@ const updateUserCoverAvatar=asyncHandler(async(req,res)=>{
   .json(new ApiResponse(200,user,"Cover Image updated successfully"))
 })
 
+//MongoDB Aggregation Pipeline
+//It can be used to perform complex data processing and transformation operations on collections of documents in MongoDB.
+
+const getUserChannelProfile=asyncHandler(async(req,res)=>{
+  const {username} = req.params//from url
+
+  if(!username?.trim()){
+    throw new ApiError(400,"Username is missing.")
+  }
+
+  const channel=await User.aggregate([
+    {
+      $match:{
+        username:username?.toLowerCase()
+      }
+    },
+    {
+      $lookup:{
+        from:"subscriptions",
+        localField:"_id",
+        foreignField:"channel",
+        as:"subscribers"
+      }
+    },
+    {
+      $lookup:{
+        from:"subscriptions",
+        localField:"_id",
+        foreignField:"subscriber",
+        as:"subscribedTo"
+      }
+    },
+  ])
+})
+
+
 
 export {
   registerUser,
@@ -359,5 +395,6 @@ export {
   getCurrentUser,
   updateAccountDetails,
   updateUserAvatar,
-  updateUserCoverAvatar
+  updateUserCoverAvatar,
+  getUserChannelProfile,
 }
