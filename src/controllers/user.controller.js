@@ -358,7 +358,7 @@ const getUserChannelProfile=asyncHandler(async(req,res)=>{
   if(!username?.trim()){
     throw new ApiError(400,"Username is missing.")
   }
-
+//pipelines
   const channel=await User.aggregate([
     {
       $match:{
@@ -412,6 +412,8 @@ const getUserChannelProfile=asyncHandler(async(req,res)=>{
       }
     }
   ])
+
+
 })
 
 
